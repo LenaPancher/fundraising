@@ -14,7 +14,7 @@ contract Crowdsale is Ownable {
 
     bool public isOpen = false;
 
-    constructor(Token _token, uint256 _rate, uint256 _openingTime, uint256 _closingTime) {
+    constructor(Token _token, uint256 _rate, uint256 _openingTime, uint256 _closingTime, address initialOwner) Ownable(initialOwner) {
         require(_rate > 0, "Rate is 0");
         require(_closingTime > _openingTime, "Invalid closing time");
 
