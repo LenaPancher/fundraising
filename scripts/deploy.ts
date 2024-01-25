@@ -7,9 +7,10 @@ async function main() {
   const token  = await Token.deploy();
 
   const Crowdsale = await ethers.getContractFactory("Crowdsale");
-  await Crowdsale.deploy(token, 1, 1, 10, deployer.address);
+  const crowdsale = await Crowdsale.deploy(token.target, 1, 1, 10, deployer.address);
 
   console.log("Token address:", await token.getAddress());
+  console.log("Crowdsale address:", await crowdsale.getAddress());
   console.log("Deploying contracts with the account:", deployer.address);
 }
 
