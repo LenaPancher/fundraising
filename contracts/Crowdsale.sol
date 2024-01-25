@@ -63,4 +63,8 @@ contract Crowdsale is Ownable {
 
         payable(owner()).transfer(balance);
     }
+
+    function balanceOf(address _address) public view returns(uint256) {
+        return token.balanceOf(_address);
+    }
 }
