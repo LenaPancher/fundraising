@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
 import {Token} from "./Token.sol";
 
 contract Crowdsale is Ownable {
@@ -26,7 +27,6 @@ contract Crowdsale is Ownable {
 
     modifier onlyWhileOpen() {
         require(isOpen, "Crowdsale not open");
-        require(block.timestamp >= openingTime && block.timestamp <= closingTime, "Crowdsale not within the time limit");
         _;
     }
 
@@ -43,6 +43,10 @@ contract Crowdsale is Ownable {
     function tokensPurchased() public payable onlyWhileOpen {
         require(msg.value > 0, "No ether sent");
         uint tokenAmount = msg.value / rate;
+        console.log(" rate: %s", rate);
+        console.log(" msg value: %s", msg.value);
+        console.log("Token amount: %s", tokenAmount);
+        console.log("Token balance: %s", token.balanceOf(address(this)));
         require(token.balanceOf(address(this)) >= tokenAmount, "Not enough tokens in the reserve");
 
         token.transfer(msg.sender, tokenAmount);
